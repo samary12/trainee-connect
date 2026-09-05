@@ -14,7 +14,187 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          company: string | null
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          role: string
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          id: string
+          role?: string
+        }
+        Update: {
+          company?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          role?: string
+        }
+        Relationships: []
+      }
+      submissions: {
+        Row: {
+          feedback: string
+          file_name: string | null
+          file_url: string | null
+          id: string
+          notes: string
+          reviewed_at: string | null
+          status: string
+          submitted_at: string
+          supervisor_id: string
+          task_id: string
+          trainee_id: string
+        }
+        Insert: {
+          feedback?: string
+          file_name?: string | null
+          file_url?: string | null
+          id?: string
+          notes?: string
+          reviewed_at?: string | null
+          status?: string
+          submitted_at?: string
+          supervisor_id: string
+          task_id: string
+          trainee_id: string
+        }
+        Update: {
+          feedback?: string
+          file_name?: string | null
+          file_url?: string | null
+          id?: string
+          notes?: string
+          reviewed_at?: string | null
+          status?: string
+          submitted_at?: string
+          supervisor_id?: string
+          task_id?: string
+          trainee_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "submissions_supervisor_id_fkey"
+            columns: ["supervisor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_trainee_id_fkey"
+            columns: ["trainee_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      supervisor_trainees: {
+        Row: {
+          created_at: string
+          id: string
+          supervisor_id: string
+          trainee_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          supervisor_id: string
+          trainee_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          supervisor_id?: string
+          trainee_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "supervisor_trainees_supervisor_id_fkey"
+            columns: ["supervisor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "supervisor_trainees_trainee_id_fkey"
+            columns: ["trainee_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tasks: {
+        Row: {
+          created_at: string
+          deadline: string
+          id: string
+          instructions: string
+          status: string
+          supervisor_id: string
+          task_file_name: string | null
+          task_file_url: string | null
+          title: string
+          trainee_id: string
+        }
+        Insert: {
+          created_at?: string
+          deadline: string
+          id?: string
+          instructions?: string
+          status?: string
+          supervisor_id: string
+          task_file_name?: string | null
+          task_file_url?: string | null
+          title: string
+          trainee_id: string
+        }
+        Update: {
+          created_at?: string
+          deadline?: string
+          id?: string
+          instructions?: string
+          status?: string
+          supervisor_id?: string
+          task_file_name?: string | null
+          task_file_url?: string | null
+          title?: string
+          trainee_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tasks_supervisor_id_fkey"
+            columns: ["supervisor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_trainee_id_fkey"
+            columns: ["trainee_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
